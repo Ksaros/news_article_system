@@ -43,9 +43,9 @@ elseif(isset($_GET['author_id']) && $_GET['author_id']) {
       http_response_code(406);
       return;
 }
-elseif(isset($_GET['get_best_authors']) && $_GET['get_best_authors']) {
+elseif(isset($_GET['get_best_authors'])) {
 
-      $data = ApiDataDispatcher::getAuthorArticles($_GET['art_id']);
+      $data = ApiDataDispatcher::getBestAuthorsArticles();
 
       if($data) {
 

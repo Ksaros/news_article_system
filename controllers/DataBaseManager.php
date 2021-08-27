@@ -53,6 +53,13 @@ class DataBaseManager {
             return $this->getQueryData($sql);
       }
 
+      public function getAuthorById($id_author) {
+
+            $sql = 'SELECT firstname, lastname FROM authors WHERE id_author = '. $id_author;
+
+            return $this->getQueryData($sql);
+      }
+
       public function getAuthorsByArticleId($id_article) {
 
             $sql = 'SELECT b.`firstname`, b.`lastname`, a.`date_upd`
@@ -62,6 +69,28 @@ class DataBaseManager {
                   WHERE a.`id_article` = '. $id_article;
 
             return $this->getQueryData($sql);
+      }
+
+      public function getAuthorArticles($id_author) {
+
+            $sql = 'SELECT a.`title`, a.`text`, b.`date_upd`
+            FROM articles a
+            LEFT JOIN article_authors b
+            ON(a.`id_article` = b.`id_article`)
+            WHERE b.`id_author` = '. $id_author;
+
+            return $this->getQueryData($sql);
+      }
+
+      public function getBestAuthorsArticles() {
+
+            $sql = 'SELECT COUNT(b.id_article) as articles_count, a.id_author FROM `article_authors` a LEFT JOIN articles b ON(a.id_article = b.id_article) WHERE date_upd BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() GROUP BY a.id_author ORDER BY articles_count DESC LIMIT 3;';
+            foreach($this->getQueryData($sql) as $author) {
+
+                  
+            }
+
+            $sql = 'SELECT * FROM `article_authors` a LEFT JOIN articles b ON(a.id_article = b.id_article) WHERE date_upd BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() ORDER BY a.date_upd ASC;';
       }
 
       public function createArticle($title, $content, $authors) {
