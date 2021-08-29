@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 26 Sie 2021, 17:52
+-- Czas generowania: 29 Sie 2021, 23:51
 -- Wersja serwera: 10.4.20-MariaDB
 -- Wersja PHP: 7.4.21
 
@@ -65,7 +65,9 @@ CREATE TABLE `authors` (
 
 INSERT INTO `authors` (`id_author`, `firstname`, `lastname`) VALUES
 (1, 'Kacper', 'Głodowski'),
-(2, 'Robert', 'Wenta');
+(2, 'Robert', 'Wenta'),
+(3, 'Jan', 'Brzechwa'),
+(4, 'Ignacy', 'Krasicki');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -97,19 +99,19 @@ ALTER TABLE `authors`
 -- AUTO_INCREMENT dla tabeli `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT dla tabeli `article_authors`
 --
 ALTER TABLE `article_authors`
-  MODIFY `id_article_author` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_article_author` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT dla tabeli `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id_author` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_author` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

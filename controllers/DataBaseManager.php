@@ -82,15 +82,29 @@ class DataBaseManager {
             return $this->getQueryData($sql);
       }
 
-      public function getBestAuthorsArticles() {
+      public function getBestAuthorsWithArticles() {
 
-            $sql = 'SELECT COUNT(b.id_article) as articles_count, a.id_author FROM `article_authors` a LEFT JOIN articles b ON(a.id_article = b.id_article) WHERE date_upd BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() GROUP BY a.id_author ORDER BY articles_count DESC LIMIT 3;';
-            foreach($this->getQueryData($sql) as $author) {
+            $sql = 'SELECT COUNT(b.`id_article`) as articles_count, a.`id_author`
+                  FROM `article_authors` a
+                  LEFT JOIN articles b
+                        ON(a.`id_article` = b.`id_article`)
+                  WHERE date_upd
+                        BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY)
+                        AND NOW()
+                  GROUP BY a.`id_author`
+                  ORDER BY articles_count DESC
+                  LIMIT 3'
+            ;
 
-                  
+            $authors = array();
+
+            foreach($this->getQueryData($sql) as $key => $author) {
+
+                  $authors[$key] = $this->getAuthorById($author['id_author'])[0];
+                  $authors[$key]['articles'] = $this->getAuthorArticles($author['id_author']);
             }
 
-            $sql = 'SELECT * FROM `article_authors` a LEFT JOIN articles b ON(a.id_article = b.id_article) WHERE date_upd BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() ORDER BY a.date_upd ASC;';
+            return $authors;
       }
 
       public function createArticle($title, $content, $authors) {
@@ -129,6 +143,17 @@ class DataBaseManager {
                         $res &= (bool)$this->setQueryData($sql, [$id_article, $id_author, date('Y-m-d H:i:s')]);
                   }
             }
+
+            return $res;
+      }
+
+      public function addAuthor($firstname, $lastname) {
+
+            $sql = 'INSERT INTO authors (`firstname`, `lastname`) VALUES(?, ?)';
+            $id_author = $this->setQueryData($sql, [$firstname, $lastname]);
+            $res = true;
+
+            $res &= (bool)$id_author;
 
             return $res;
       }

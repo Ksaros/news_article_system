@@ -5,8 +5,10 @@ if (
       isset($_GET['art_id']) ||
       isset($_GET['author_id']) ||
       isset($_GET['get_best_authors'])
-)
+) {
+
       require_once dirname(__DIR__). "/controllers/ApiDataDispatcher.php";
+}
 else {
 
       http_response_code(406);
@@ -45,7 +47,7 @@ elseif(isset($_GET['author_id']) && $_GET['author_id']) {
 }
 elseif(isset($_GET['get_best_authors'])) {
 
-      $data = ApiDataDispatcher::getBestAuthorsArticles();
+      $data = ApiDataDispatcher::getBestAuthorsWithArticles();
 
       if($data) {
 

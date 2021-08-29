@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__). "\DataBaseManager.php";
+require_once dirname(__DIR__). "\include.php";
 
 class ApiDataDispatcher {
 
@@ -27,9 +27,22 @@ class ApiDataDispatcher {
             if($author) {
 
                   $author = $author[0];
-                  $author['articles'] = $dbManager->getAuthorArticles($id_author);;
+                  $author['articles'] = $dbManager->getAuthorArticles($id_author);
 
                   return json_encode($author);
+            }
+
+            return false;
+      }
+
+      public static function getBestAuthorsWithArticles() {
+
+            $dbManager = new DataBaseManager(_DB_CONFIG_);
+            $authors = $dbManager->getBestAuthorsWithArticles();
+
+            if($authors) {
+
+                  return json_encode($authors);
             }
 
             return false;

@@ -30,7 +30,11 @@
 
             <div class="col-12 mt-2">
 
-            <?php if(isset($_GET['article_add_success']) && $_GET['article_add_success']):?>
+            <?php if(
+                  (isset($_GET['article_add_success']) && $_GET['article_add_success']) ||
+                  (isset($_GET['article_modify_success']) && $_GET['article_modify_success']) ||
+                  (isset($_GET['author_add_success']) && $_GET['author_add_success'])
+            ):?>
                   <div class="alert alert-success d-flex align-items-center" role="alert">
                         <svg
                               class="bi flex-shrink-0 me-2"
@@ -42,10 +46,21 @@
                               <use xlink:href="#check-circle-fill"/>
                         </svg>
                         <span>
-                              Dodawanie artykułu powiodło się
+                              <?php
+                              if(isset($_GET['article_add_success']) && $_GET['article_add_success'])
+                                    echo 'Dodawanie artykułu powiodło się';
+                              elseif(isset($_GET['article_modify_success']) && $_GET['article_modify_success'])
+                                    echo 'Modyfikacja artykułu powiodła się';
+                              elseif(isset($_GET['author_add_success']) && $_GET['author_add_success'])
+                                    echo 'Dodano nowego autora';
+                              ?>
                         </span>
                   </div>
-            <?php elseif(isset($_GET['article_add_success']) && !$_GET['article_add_success']): ?>
+            <?php elseif(
+                  (isset($_GET['article_add_success']) && !$_GET['article_add_success']) ||
+                  (isset($_GET['article_modify_success']) && !$_GET['article_modify_success']) ||
+                  (isset($_GET['author_add_success']) && !$_GET['author_add_success'])
+            ): ?>
 
                   <div class="alert alert-warning d-flex align-items-center" role="alert">
                         <svg
@@ -58,41 +73,15 @@
                               <use xlink:href="#exclamation-triangle-fill"/>
                         </svg>
                         <span>
-                              Dodawanie artykułu nie powiodło się
-                        </span>
-                  </div>
 
-            <?php elseif(isset($_GET['article_modify_success']) && $_GET['article_modify_success']): ?>
-
-                  <div class="alert alert-success d-flex align-items-center" role="alert">
-                        <svg
-                              class="bi flex-shrink-0 me-2"
-                              width="24"
-                              height="24"
-                              role="img"
-                              aria-label="Success:"
-                        >
-                              <use xlink:href="#check-circle-fill"/>
-                        </svg>
-                        <span>
-                              Modyfikacja artykułu powiodła się
-                        </span>
-                  </div>
-
-            <?php elseif(isset($_GET['article_modify_success']) && !$_GET['article_modify_success']): ?>
-
-                  <div class="alert alert-warning d-flex align-items-center" role="alert">
-                        <svg
-                              class="bi flex-shrink-0 me-2"
-                              width="24"
-                              height="24"
-                              role="img"
-                              aria-label="Warning:"
-                        >
-                              <use xlink:href="#exclamation-triangle-fill"/>
-                        </svg>
-                        <span>
-                              Modyfikacja artykułu nie powiodła się
+                              <?php
+                              if(isset($_GET['article_add_success']) && !$_GET['article_add_success'])
+                                    echo 'Dodawanie artykułu nie powiodło się';
+                              elseif(isset($_GET['article_modify_success']) && !$_GET['article_modify_success'])
+                                    echo 'Modyfikacja artykułu nie powiodła się';
+                              elseif(isset($_GET['author_add_success']) && !$_GET['author_add_success'])
+                                    echo 'Dodawanie nowego autora zakończyło się niepowodzeniem';
+                              ?>
                         </span>
                   </div>
 
@@ -145,6 +134,31 @@
 
             <div class="col-md-6 d-flex align-items-center justify-content-center">
                   <button type="submit" class="btn btn-primary">Dodaj artykuł</button>
+            </div>
+      </form>
+
+      <form action="<?php echo __BASE_URI__;?>/add_author" class="row g-3 mb-5" method="post">
+
+            <div class="form-group col-4">
+                  <label class="control-label">
+                        Imię
+                  </label>
+                  <div class="input-group">
+                        <input type="text" name="firstname" id="firstname" class="form-control" required>
+                  </div>
+            </div>
+
+            <div class="form-group col-4">
+                  <label class="control-label">
+                        Nazwisko
+                  </label>
+                  <div class="input-group">
+                        <input type="text" name="lastname" id="lastname" class="form-control" required>
+                  </div>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end justify-content-left">
+                  <button type="submit" class="btn btn-primary">Dodaj autora</button>
             </div>
       </form>
 

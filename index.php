@@ -26,6 +26,13 @@ if($request_uri[1] == basename(__DIR__)) {
             else
                   header('Location: '. __BASE_URI__ .'/modify/?article_modify_success=0');
       }
+      elseif($request_uri[2] == "add_author") {
+
+            if($dbManager->addAuthor($_POST['firstname'], $_POST['lastname']))
+                  header('Location: '. __BASE_URI__ .'/modify/?author_add_success=1');
+            else
+                  header('Location: '. __BASE_URI__ .'/modify/?author_add_success=0');
+      }
       elseif($request_uri[2] == "get_articles") {
 
             include dirname(__FILE__). '/api/index.php';
