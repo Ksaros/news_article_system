@@ -64,10 +64,19 @@ else {
             else
                   header('Location: '. __BASE_URI__ .'/modify/?article_modify_success=0');
       }
+      elseif($request_uri[1] == "add_author") {
+
+            if($dbManager->addAuthor($_POST['firstname'], $_POST['lastname']))
+                  header('Location: '. __BASE_URI__ .'/modify/?author_add_success=1');
+            else
+                  header('Location: '. __BASE_URI__ .'/modify/?author_add_success=0');
+      }
+      elseif($request_uri[1] == "get_articles") {
+
+            include dirname(__FILE__). '/api/index.php';
+      }
       else {
 
             include dirname(__FILE__). '/views/articles/index.php';
       }
-
-      include dirname(__FILE__). '/views/articles/index.php';
 }
