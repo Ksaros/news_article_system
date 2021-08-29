@@ -1,21 +1,6 @@
-Struktura danych
-      1. Jednostka wiadomości z co najmniej polami tytułu, tekstu i daty utworzenia.
-      2. Jednostka autora wiadomości z co najmniej polem na nazwisko.
-      3. Artykuły mogą mieć wielu autorów
-Punkty końcowe API
-      1. Pobierz artykuł od jakiegoś id
-      2. Pobierz wszystkie artykuły dla danego autora
-      3. Zdobądź 3 najlepszych autorów, którzy napisali najwięcej artykułów w zeszłym tygodniu.
-Wymagania:
-      1. Powinieneś dołączyć plik README ze wszystkim, co musimy wiedzieć, jak uruchomić i "używać" swojego projekt.
-      2. Wszystkie niezbędne początkowe operacje na bazie danych (takie jak tworzenie tabel, wstawianie urządzeń itp.) powinny:
-            w razie potrzeby zrobić w jednym pliku .sql
-      3. Formularz HTML powinien umożliwiać przynajmniej dodawanie/edycję artykułów. Lista autorów może być zakodowana na sztywno do bazy danych.
-Poradnik:
-      1. Nie przemyśl tego! :)
-      2. Żadne ramy nie są wymagane, ale możesz użyć jednego, jeśli masz na to ochotę.
-      3. Zwróć uwagę na jakość kodu, formatowanie, konwencje itp.\
+Kacper Głodowski News Article System
 
+PL
 Uruchomienie:
 
       1. Należy stworzyć bazę danych na lokalnym serwerze
@@ -37,3 +22,26 @@ Używanie programu:
             Jeżeli nie będzie danych do wyświetlenia serwer zwróci błąd 406.
 
       3. Wejście na stronę bez podania podstrony spowoduje wyświetlenie listy istniejących artykułów.
+
+EN
+Activation:
+
+      1. Create a database on a local server
+      and import the "news_article_system.sql" file in the config folder into it.
+
+      2. In the config folder, in the "db_config.php" file, you should provide the database login details.
+
+Using the program:
+
+      1. To modify / add articles and add authors, just go to the "/ modify" subpage.
+      2. API:
+            a. Downloading the article by specifying id - go to the "get_articles" subpage
+            with an art_id parameter, e.g. / get_articles /? art_id = 1
+            b. Downloading all articles by a given author - go to the "get_articles" subpage
+            together with the author_id parameter, e.g. / get_articles /? author_id = 1
+            c. Get the top 3 authors who wrote the most articles last week - go to the "get_articles" subpage
+            with a get_best_authors parameter, e.g. / get_articles /? get_best_authors
+
+            If there is no data to display, the server will return a 406 error.
+
+      3. Entering the website without specifying a subpage will display a list of existing articles.
