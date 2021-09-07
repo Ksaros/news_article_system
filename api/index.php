@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * odblokowanie zabezpieczenia CORS dla wszystkich domen
+ */
 header("Access-Control-Allow-Origin: *");
 
 if (

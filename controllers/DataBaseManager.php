@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class with methods to manage database
+ */
 class DataBaseManager {
 
       private $database_host;
@@ -31,33 +34,34 @@ class DataBaseManager {
 
       public function getArticleAuthors($id_article) {
 
-            $sql = 'SELECT id_author FROM article_authors WHERE id_article ='. $id_article;
+            $sql = 'SELECT id_author FROM article_authors WHERE id_article = ?';
 
-            return $this->getQueryData($sql);
+            return $this->getQueryData($sql, [$id_article]);
       }
 
       public function isArticleAuthors($id_article, $id_author) {
 
             $sql = 'SELECT id_article_author
                   FROM article_authors
-                  WHERE id_article = '. $id_article .'
-                  AND id_author = '. $id_author;
+                  WHERE id_article = ?
+                  AND id_author = ?'
+            ;
 
-            return $this->getQueryData($sql);
+            return $this->getQueryData($sql, [$id_article, $id_author]);
       }
 
       public function getArticleById($id_article) {
 
-            $sql = 'SELECT title, `text`, date_add FROM articles WHERE id_article ='. $id_article;
+            $sql = 'SELECT title, `text`, date_add FROM articles WHERE id_article = ?';
 
-            return $this->getQueryData($sql);
+            return $this->getQueryData($sql, [$id_article]);
       }
 
       public function getAuthorById($id_author) {
 
-            $sql = 'SELECT firstname, lastname FROM authors WHERE id_author = '. $id_author;
+            $sql = 'SELECT firstname, lastname FROM authors WHERE id_author = ?';
 
-            return $this->getQueryData($sql);
+            return $this->getQueryData($sql, [$id_author]);
       }
 
       public function getAuthorsByArticleId($id_article) {
@@ -66,9 +70,9 @@ class DataBaseManager {
                   FROM article_authors a
                   LEFT JOIN authors b
                   ON(a.`id_author` = b.`id_author`)
-                  WHERE a.`id_article` = '. $id_article;
+                  WHERE a.`id_article` = ?';
 
-            return $this->getQueryData($sql);
+            return $this->getQueryData($sql, [$id_article]);
       }
 
       public function getAuthorArticles($id_author) {
@@ -77,9 +81,9 @@ class DataBaseManager {
             FROM articles a
             LEFT JOIN article_authors b
             ON(a.`id_article` = b.`id_article`)
-            WHERE b.`id_author` = '. $id_author;
+            WHERE b.`id_author` = ?';
 
-            return $this->getQueryData($sql);
+            return $this->getQueryData($sql, [$id_author]);
       }
 
       public function getBestAuthorsWithArticles() {
@@ -128,8 +132,8 @@ class DataBaseManager {
 
       public function modifyArticle($id_article, $title, $content, $authors) {
 
-            $sql = 'UPDATE articles SET title = ?, `text` = ? WHERE id_article = '. $id_article;
-            $this->setQueryData($sql, [$title, $content]);
+            $sql = 'UPDATE articles SET title = ?, `text` = ? WHERE id_article = ?';
+            $this->setQueryData($sql, [$title, $content, $id_article]);
             $res = true;
 
             if(($res &= (bool)$id_article)) {

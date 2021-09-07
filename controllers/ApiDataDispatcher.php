@@ -2,6 +2,9 @@
 
 require_once dirname(__DIR__). "\include.php";
 
+/**
+ * class for managing api requests
+ */
 class ApiDataDispatcher {
 
       public static function getArticleById($id_article) {
